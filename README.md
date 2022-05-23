@@ -18,7 +18,6 @@
 
 可以开发插件来获取金币？
 
-
 ## 插件使用
 
 ```python
@@ -32,3 +31,7 @@ await DailySign.adjust_gold(adjust, user_id, group_id)
 # 更改金币数量 adjust 正负均可
 
 ```
+
+## 计划
+
+- [ ] 用来减少 `SETU NOW` 插件的 CD
