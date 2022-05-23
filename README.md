@@ -17,3 +17,18 @@
 [https://github.com/kexue-z/nonebot-plugin-tortoise-orm](https://github.com/kexue-z/nonebot-plugin-tortoise-orm)
 
 可以开发插件来获取金币？
+
+
+## 插件使用
+
+```python
+
+from nonebot_plugin_dailysign.models import DailySign
+
+await DailySign.get_gold(user_id, group_id)
+# 获取金币
+
+await DailySign.adjust_gold(adjust, user_id, group_id)
+# 更改金币数量 adjust 正负均可
+
+```

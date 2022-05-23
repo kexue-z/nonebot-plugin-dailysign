@@ -27,7 +27,7 @@ async def get_sign_in(user_id: int, group_id: int) -> Message:
         group_id=group_id,
         gold_base=100,
         lucky_gold=randint(1, 10),
-        today_lucky=sign_num,
+        today_lucky=randint(1, 10) - randint(1, 10),
     )
 
     msg_txt = f"本群第 {sign_num} 位 签到完成\n"
