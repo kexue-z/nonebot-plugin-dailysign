@@ -17,3 +17,7 @@
 [https://github.com/kexue-z/nonebot-plugin-tortoise-orm](https://github.com/kexue-z/nonebot-plugin-tortoise-orm)
 
 可以开发插件来获取金币？
+
+# 计划
+
+- [ ] 用来减少 `SETU NOW` 插件的 CD
