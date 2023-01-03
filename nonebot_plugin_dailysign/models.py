@@ -121,3 +121,20 @@ class DailySign(Model):
         record.gold += adjust
         await record.save(update_fields=["gold"])
         return record.gold
+
+
+class Love(Model):
+    id = fields.IntField(pk=True, generated=True)
+    user_id = fields.IntField()
+    love = fields.FloatField(default=0.00)
+    
+    class Meta:
+        table = "daily_sign"
+        table_description = "签到表"
+        
+
+    @classmethod
+    async def add_love(cls, user_id, love:float = 0.01):
+        data = await cls.get_or_create(user_id,love)
+        return data.love
+    
