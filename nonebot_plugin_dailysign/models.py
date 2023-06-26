@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 
 from tortoise import fields
 from tortoise.models import Model
@@ -13,6 +13,7 @@ class DailySign(Model):
     gold = fields.IntField(default=0)
     sign_times = fields.IntField(default=0)
     last_sign = fields.DateField(default=date(2000, 1, 1))
+    streak = fields.IntField(default=0)
 
     class Meta:
         table = "daily_sign"
@@ -46,7 +47,8 @@ class DailySign(Model):
             group_id=group_id,
         )
         today = date.today()
-        record.last_sign = today
+        if record.last_sign == (today - timedelta(days=1)):
+            record.streak += 1
 
         today_gold = gold_base + lucky_gold * today_lucky
         record.gold += today_gold
@@ -54,7 +56,7 @@ class DailySign(Model):
 
         record.sign_times += 1
 
-        await record.save(update_fields=["last_sign", "gold", "sign_times"])
+        await record.save(update_fields=["last_sign", "gold", "sign_times", "streak"])
         return SignData(
             all_gold=all_gold,
             today_gold=today_gold,
@@ -121,20 +123,3 @@ class DailySign(Model):
         record.gold += adjust
         await record.save(update_fields=["gold"])
         return record.gold
-
-
-class Love(Model):
-    id = fields.IntField(pk=True, generated=True)
-    user_id = fields.IntField()
-    love = fields.FloatField(default=0.00)
-    
-    class Meta:
-        table = "daily_sign"
-        table_description = "签到表"
-        
-
-    @classmethod
-    async def add_love(cls, user_id, love:float = 0.01):
-        data = await cls.get_or_create(user_id,love)
-        return data.love
-    

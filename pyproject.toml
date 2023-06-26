@@ -1,27 +1,32 @@
-[tool.poetry]
+[project]
 name = "nonebot-plugin-dailysign"
-version = "0.0.2"
+version = "0.1.0"
 description = "一个简单的每日签到插件"
-authors = ["kexue <x@kexue.io>"]
-license = "MIT"
-homepage = "https://github.com/kexue-z/nonebot-plugin-dailysign"
+authors = [
+    {name = "kexue", email = "xana278@foxmail.com"},
+    {name = "kexue", email = "x@kexue.io"},
+]
+dependencies = [
+    "nonebot2[fastapi]>=2.0.0",
+    "nonebot-adapter-onebot>=2.0.0",
+    "nonebot-plugin-tortoise-orm>=0.1.0",
+]
+requires-python = ">=3.8,<4.0"
 readme = "README.md"
+license = {file = "LICENSE"}
 
-[tool.poetry.dependencies]
-python = ">=3.8,<4.0"
-nonebot2 = "^2.0.0-beta.1"
-nonebot-adapter-onebot = "^2.0.0-beta.1"
-nonebot-plugin-tortoise-orm = "^0.0.1-alpha.2"
+[project.urls]
+homepage = "https://github.com/kexue-z/nonebot-plugin-dailysign"
 
 
-[tool.poetry.dev-dependencies]
-black = {version = "^21.10b0", allow-prereleases = true}
-flake8 = "^4.0.1"
-isort = "^5.10.1"
-nb-cli = "^0.6.6"
-click = "^8.1.3"
-nonebug = ">=0.2.2"
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = []
 
+[tool.pdm.build]
+includes = []
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
