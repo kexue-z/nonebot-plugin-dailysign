@@ -1,8 +1,10 @@
+from random import randint
 from datetime import date, timedelta
 
 from tortoise import fields
 from tortoise.models import Model
 
+from .config import BASE, MAX_LUCKY, MULTIPLIER
 from .data_model import SignData
 
 
@@ -24,9 +26,6 @@ class DailySign(Model):
         cls,
         user_id: int,
         group_id: int,
-        gold_base: int,
-        lucky_gold: int,
-        today_lucky: int,
     ) -> SignData:
         """
         :说明: `sign_in`
@@ -35,9 +34,6 @@ class DailySign(Model):
         :参数:
           * `user_id: int`: 用户ID
           * `group_id: int`: 群ID
-          * `gold_base: int`: 金币基数
-          * `lucky_gold: int`: 幸运金币
-          * `today_lucky: int`: 今天的幸运值
 
         :返回:
           - `SignData`: 签到数据
@@ -46,22 +42,27 @@ class DailySign(Model):
             user_id=user_id,
             group_id=group_id,
         )
+
         today = date.today()
         if record.last_sign == (today - timedelta(days=1)):
             record.streak += 1
 
-        today_gold = gold_base + lucky_gold * today_lucky
+        gold_base = BASE + randint(-MAX_LUCKY, MAX_LUCKY)
+        """基础金币"""
+
+        today_gold = round(gold_base * (1 + record.streak * MULTIPLIER))
+        """计算连续签到加成"""
+
         record.gold += today_gold
-        all_gold = record.gold
 
         record.sign_times += 1
 
         await record.save(update_fields=["last_sign", "gold", "sign_times", "streak"])
         return SignData(
-            all_gold=all_gold,
+            all_gold=record.gold,
             today_gold=today_gold,
             sign_times=record.sign_times,
-            today_lucky=today_lucky,
+            streak=record.streak,
         )
 
     @classmethod
