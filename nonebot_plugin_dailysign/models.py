@@ -47,6 +47,8 @@ class DailySign(Model):
         if record.last_sign == (today - timedelta(days=1)):
             record.streak += 1
 
+        record.last_sign = today
+
         gold_base = BASE + randint(-MAX_LUCKY, MAX_LUCKY)
         """基础金币"""
 
