@@ -1,14 +1,14 @@
 from nonebot import require, on_fullmatch
+
+require("nonebot_plugin_tortoise_orm")
 from nonebot.log import logger
 from nonebot.plugin import PluginMetadata
 from nonebot.adapters.onebot.v11 import GroupMessageEvent as V11MessageEvent
 from nonebot.adapters.onebot.v12 import GroupMessageEvent as V12MessageEvent
+from nonebot_plugin_tortoise_orm import add_model
 
 from .config import Config
 from .data_source import get_sign_in
-
-require("nonebot_plugin_tortoise_orm")
-from nonebot_plugin_tortoise_orm import add_model
 
 add_model("nonebot_plugin_dailysign.models")
 

@@ -1,6 +1,6 @@
 [project]
 name = "nonebot-plugin-dailysign"
-version = "0.1.0"
+version = "0.1.0.1"
 description = "一个简单的每日签到插件"
 authors = [
     {name = "kexue", email = "xana278@foxmail.com"},
