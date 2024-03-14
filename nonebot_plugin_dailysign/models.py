@@ -1,5 +1,5 @@
-from random import randint
 from datetime import date, timedelta
+from random import randint
 
 from tortoise import fields
 from tortoise.models import Model
@@ -10,8 +10,8 @@ from .data_model import SignData
 
 class DailySign(Model):
     id = fields.IntField(pk=True, generated=True)
-    user_id = fields.IntField()
-    group_id = fields.IntField()
+    user_id = fields.CharField(max_length=20)
+    group_id = fields.CharField(max_length=20)
     gold = fields.IntField(default=0)
     sign_times = fields.IntField(default=0)
     last_sign = fields.DateField(default=date(2000, 1, 1))
@@ -24,16 +24,16 @@ class DailySign(Model):
     @classmethod
     async def sign_in(
         cls,
-        user_id: int,
-        group_id: int,
+        user_id: str,
+        group_id: str,
     ) -> SignData:
         """
         :说明: `sign_in`
         > 添加签到记录
 
         :参数:
-          * `user_id: int`: 用户ID
-          * `group_id: int`: 群ID
+          * `user_id: str`: 用户ID
+          * `group_id: str`: 群ID
 
         :返回:
           - `SignData`: 签到数据
@@ -68,14 +68,14 @@ class DailySign(Model):
         )
 
     @classmethod
-    async def get_last_sign(cls, user_id: int, group_id: int) -> date:
+    async def get_last_sign(cls, user_id: str, group_id: str) -> date:
         """
         :说明: `get_last_sign`
         > 获取最近的签到日期
 
         :参数:
-          * `user_id: int`: 用户ID
-          * `group_id: int`: 群ID
+          * `user_id: str`: 用户ID
+          * `group_id: str`: 群ID
 
         :返回:
           - `date`: 签到日期
@@ -87,14 +87,14 @@ class DailySign(Model):
         return record.last_sign
 
     @classmethod
-    async def get_gold(cls, user_id: int, group_id: int) -> int:
+    async def get_gold(cls, user_id: str, group_id: str) -> int:
         """
         :说明: `get_gold`
         > 获取金币
 
         :参数:
-          * `user_id: int`: 用户ID
-          * `group_id: int`: 群ID
+          * `user_id: str`: 用户ID
+          * `group_id: str`: 群ID
 
         :返回:
           - `int`: 当前金币数量
@@ -106,15 +106,15 @@ class DailySign(Model):
         return record.gold
 
     @classmethod
-    async def adjust_gold(cls, adjust: int, user_id: int, group_id: int) -> int:
+    async def adjust_gold(cls, adjust: int, user_id: str, group_id: str) -> int:
         """
         :说明: `adjust_gold`
         > 调整金币
 
         :参数:
           * `adjust: int`: 调整金币数量 为正 则添加 为负 则减少
-          * `user_id: int`: 用户ID
-          * `group_id: int`: 群ID
+          * `user_id: str`: 用户ID
+          * `group_id: str`: 群ID
 
         :返回:
           - `int`: 当前金币数量
